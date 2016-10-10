@@ -181,7 +181,7 @@ int main()
             }
             else
             {
-                std::cout << 'x' << " ";
+                std::cout << '.' << " ";
             }
         }
         std::cout << std::endl;
