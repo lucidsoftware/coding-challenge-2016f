@@ -1,0 +1,188 @@
+<style>
+  /* Main layout */
+
+	body, .menu {
+		background: #f4f4f4;
+	}
+
+	/* Ads */
+	iframe, ins, .aProblemTop {
+		display: none;
+	}
+
+	form[name="fch"] {
+		display: none;
+	}
+
+	.footer {
+		padding-top: 4px;
+	}
+
+	.content0 {
+		border-right: none;
+	}
+
+	.content, .content0 {
+		background: white;
+	}
+
+	.navigation {
+		background: white;
+	}
+
+	table.navigation {
+		display: none;
+	}
+
+	.navigation + h3 {
+		display: none;
+	}
+
+	.problems:first-child {
+		margin-bottom: 10px;
+		padding: 0 100px;
+	}
+
+	.headerleft, .headerright, .headerrowleft, .headerrowright {
+		background: #000080;
+	}
+
+	.headerleft {
+		border-top-left-radius: 30px;
+	}
+
+	.headerright {
+		border-top-right-radius: 30px;
+	}
+
+	.headerrowleft {
+		border-top-left-radius: 11px;
+	}
+
+	.headerrowright {
+		border-top-right-radius: 11px;
+	}
+
+	a[href="/BYU2015F/news"],
+		a[href="/BYU2015F/news"] + br,
+		a[href="/BYU2015F/comments"],
+		a[href="/BYU2015F/comments"] + br,
+		a[href="/BYU2015F/embed/info/"],
+		a[href="/BYU2015F/embed/info/"] + br,
+		a[href="/BYU2015F/embed/links/"],
+		a[href="/BYU2015F/embed/links/"] + br {
+		display: none ! important;
+	}
+
+	/** Temporary */
+	a[href*=edit][href*=problems] {
+		display: none;
+	}
+
+	.fb-like {
+		display: none;
+	}
+	#___plusone_0 {
+		display: none !important;
+	}
+
+	table td h1 {
+		margin: 0;
+	}
+
+	table td > h2:last-child, table td > h2:first-child, table + br {
+		display: none;
+	}
+
+	/* Printing */
+
+	@media print {
+		html {
+			transform: scale(.8);
+			transform-origin: top;
+		}
+	}
+
+	@media print {
+		body > *, .menu,
+			.problems,
+			#header,
+			#footer,
+			tr:first-child td:first-child div[align="center"]:first-child,
+			td > h2,
+			#ccontent,
+			#ccontent + table,
+			.probleminfo,
+			.prob > hr { 
+		display: none;
+	}
+	@media print {
+		body .container {
+			display: block;
+			border: none ! important;
+		}
+	}
+
+	pre {
+		tab-size: 4;
+	}
+</style>
+
+<script>
+  if(location.hostname != 'www.spoj.com') {
+      // BYU ACM logo
+      $('link[rel="shortcut icon"]').replaceWith('<link href="http://acm.byu.edu/img/favicon.ico" rel="shortcut icon">');
+
+      // correct login form
+      $('form').each(function() {
+          var action = $(this).attr('action').replace('https://www.spoj.com/', '/');
+          $(this).attr('action', action);
+      });
+  }
+
+  //remove jobs widget
+  var removeWidget = setInterval(function(){
+    var jobWidget = $('#rcv4_widget');
+    if(jobWidget.length > 0){
+      jobWidget.remove();
+      clearInterval(removeWidget);
+      console.log('removed');
+    }
+  }, 10);
+
+	// remove fields
+	var removeFields = ['VC/C'];
+	$('.headerrow th').each(function() {
+		if(removeFields.indexOf($(this).text()) >= 0) {
+			var i = $(this).parent().children().index(this) + 1;
+			$(this).closest('table').find('th:nth-child(' + i + '), td:nth-child(' + i + ')').remove();
+		}
+	});
+
+	// remove options
+	var removeOptions = ['PDF', 'PS', 'TODO problems']
+	$('tr.navigation td').each(function() {
+		if(removeOptions.indexOf($(this).text()) >= 0) {
+			$(this).remove();
+		}
+	});
+
+  // problem title
+	var title = $('.content0 h1');
+	title.text(title.text().split(' ').slice(1).join(' '));
+	
+	// side menu
+	$('.menu a[href="/BYU2015F/embed/rules/"]')
+		//.after('<br><br><a href="/BYU2015F/embed/solutions/">solutions</a>')
+		.after('<br><a href="/BYU2015F/embed/samples/">samples</a>');
+
+	swapSheet = function() {};
+	setWidth = function() {};
+</script>
+
+<span style="font-size:16px">
+	Sponsored by
+	<a target="blank" href="https://www.golucid.co/jobs">
+		<img src="/BYU2015F/content/lucid.png" style="height:36px;margin-top:-5px;vertical-align:middle">
+	</a>
+</span>
