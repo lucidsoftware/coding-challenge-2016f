@@ -40,6 +40,10 @@ o:  for(var i=0; i<board[0].length; i++) {
     }
     var farthest = findFurthest(board, start);
     var result = findFurthest(board, farthest.pos);
+    var b = board.map(r => r.split(''));
+    b[farthest.pos.y][farthest.pos.x] = 'x';
+    b[result.pos.y][result.pos.x] = 'x';
+    // console.log(b.map(r => r.join('')).join('\n'));
     console.log('Maximum path length is ' + result.dist);
 }
 
@@ -74,7 +78,7 @@ function findFurthest(board, pos) {
     }
     if(count != board.join('').replace(/#/g,'').length) {
         console.log('not traversable', count, board.join('').replace(/#/g,'').length);
-        console.log(board.join('\n'));
+        console.log(board.map((r,y) => r.split('').map((c,x) => seen[x+','+y] ? 'x' : c).join('')).join('\n'));
     }
     return result;
 }
