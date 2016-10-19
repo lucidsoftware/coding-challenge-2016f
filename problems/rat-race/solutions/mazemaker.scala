@@ -5,13 +5,14 @@ object MaxeMaker {
 	
 	class bitfield2d(w:Int, h:Int) {
 		val bits = Array.ofDim[Int](((w*h)/32) + 1)
-		def set(x:Int, y:Int):Unit ={
+		def set(x:Int, y:Int):Unit = {
 			val bit = x + (y*w);
 			val bitSubIndex = bit & 0x1F;
 			val intIndex = bit >> 5;
 			bits(intIndex) = bits(intIndex) | (1<<bitSubIndex);
 		}
-		def clear(x:Int, y:Int):Unit ={
+
+		def clear(x:Int, y:Int):Unit = {
 			val bit = x + (y*w);
 			val bitSubIndex = bit & 0x1F;
 			val intIndex = bit >> 5;
@@ -41,45 +42,38 @@ object MaxeMaker {
 		else 
 			true
 	}
-	def canGo(visited:bitfield2d, dir:(Int,Int),x:Int, y:Int, w:Int, h:Int):Boolean = {
-		val nextX = x + dir._1 * 2;
-		var nextY = y + dir._2 * 2;
-		if (isInBounds(nextX,nextY,w,h)) {
-			if (!visited.check(nextX,nextY))
-			{
-				return true
-			}
-		}
-		false
+	def canGo(visited:bitfield2d, x:Int, y:Int, w:Int, h:Int, allowZero:Boolean):Boolean = {
+		val dirs = List[(Int,Int)]((1,0),(-1,0),(0,1),(0,-1))
+		val allowed = if(allowZero) Set(0,1) else Set(1)
+		isInBounds(x, y, w, h) && !visited.check(x,y) && allowed.contains(dirs.count(d => {
+			val nx = x + d._1
+			val ny = y + d._2
+			isInBounds(nx, ny, w, h) && visited.check(nx,ny)
+		}))
 	}
 	def crawl(maze:bitfield2d, startX:Int, startY:Int, w:Int, h:Int):Unit = {
 		val stack = Stack[(Int,Int)]()
 		var x = startX;
 		var y = startY;
+		var first = true
 		stack.push((x,y))
-		while (stack.length > 0) {
-			var dir = pickDirection();
-			if (!canGo(maze,dir,x,y,w,h)) dir = pickDirection();	
-			if (!canGo(maze,dir,x,y,w,h)) dir = pickDirection();	
-			if (!canGo(maze,dir,x,y,w,h)) dir = pickDirection();	
-			if (canGo(maze,dir,x,y,w,h)) {
-				val nx = x+dir._1;
-				val ny = y+dir._2;
-				maze.set(nx,ny);
-				val nx2 = x+(2*dir._1)
-				val ny2 = y+(2*dir._2)
-				stack.push((nx2,ny2));
-				maze.set(nx2,ny2);
-				x = nx2;
-				y = ny2;
+		do {
+			val prev = stack.pop();
+			x = prev._1;
+			y = prev._2;
+			if(canGo(maze,x,y,w,h,first)) {
+				maze.set(x,y)
+				val dirs = List[(Int,Int)]((1,0),(-1,0),(0,1),(0,-1))
+				scala.util.Random.shuffle(dirs).foreach {dir =>
+					var nx = x+dir._1
+					var ny = y+dir._2
+					if(canGo(maze,nx,ny,w,h,false)) {
+						stack.push((nx,ny))
+					}
+				}
 			}
-			else
-			{
-				val prev = stack.pop();
-				x = prev._1;
-				y = prev._2;
-			}
-		}
+			first = false
+		} while (stack.length > 0)
 	}
 
 	def printMaze(maze:bitfield2d, w:Int, h:Int):Unit = {
@@ -93,14 +87,23 @@ object MaxeMaker {
 	}
 
 	def main(args: Array[String]) = {
-		val w = 51
-		val h = 51
+		val cases = 1
+		println(cases)
 
-		val maze= new bitfield2d(w,h);
+		0 until cases foreach {_ =>
+			val w = 100//rand.nextInt(98)+3
+			val h = 100//rand.nextInt(98)+3
 
-		crawl(maze,w/2,h/2,w,h)
+			println(w + " " + h)
 
-		printMaze(maze,w,h)
+			val maze= new bitfield2d(w,h);
+
+			crawl(maze,w/2,h/2,w,h)
+
+			printMaze(maze,w,h)
+			
+		}
+
 
 	}
 }
