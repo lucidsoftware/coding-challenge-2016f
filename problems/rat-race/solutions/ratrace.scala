@@ -1,15 +1,9 @@
 import java.util.Scanner
 import java.util.ArrayList
+import scala.collection.mutable.Stack
 
 object RatRace {
 
-	class VisitTracker(cols:Int, rows:Int) {
-		var visited = Array.ofDim[Boolean](cols,rows);
-
-		def visit(x:Int, y:Int):Unit = visited(x)(y) = true;
-		def unvisit(x:Int, y:Int):Unit = visited(x)(y) = false;
-		def isVisited(x:Int, y:Int):Boolean = visited(x)(y);
-	}
 	class Maze(cols:Int, rows:Int)  {
 		var maze = Array.ofDim[Boolean](cols,rows);
 		var curRow:Int = 0;
@@ -17,7 +11,25 @@ object RatRace {
 		class Point(x:Int, y:Int) {
 			def X():Int = {return x;}
 			def Y():Int = {return y;}
+			def add(p:Point):Point = { new Point(x+p.X,y+p.Y) }
+		}
 
+		val up:Point = new Point(0,-1);
+		val down:Point = new Point(0,1);
+		val left:Point = new Point(-1,0);
+		val right:Point = new Point(1,0);
+
+		class Progress(_p:Point, _d:Int) {
+			def point():Point = _p
+			def distance():Int = _d
+		}
+
+		class VisitTracker(cols:Int, rows:Int) {
+			var visited = Array.ofDim[Boolean](cols,rows);
+
+			def visit(x:Int, y:Int):Unit = visited(x)(y) = true;
+			def unvisit(x:Int, y:Int):Unit = visited(x)(y) = false;
+			def isVisited(p:Point):Boolean = visited(p.X)(p.Y);
 		}
 
 		def AddRow(row:String) {
@@ -27,20 +39,20 @@ object RatRace {
 			}
 			curRow+=1;
 		}
-		override def toString = cols + "x" + rows ;
 
-		def IsSpotOpen(x:Int, y:Int):Boolean = { return maze(x)(y) }
-		def CanGoUp(x:Int, y:Int):Boolean = { if (y>0 && IsSpotOpen(x,y-1)) true else false }
-		def CanGoDown(x:Int, y:Int):Boolean = { if (y<rows-1 && IsSpotOpen(x,y+1)) true else false }
-		def CanGoLeft(x:Int, y:Int):Boolean = { if (x>0 && IsSpotOpen(x-1,y)) true else false }
-		def CanGoRight(x:Int, y:Int):Boolean = { if (x<cols-1 && IsSpotOpen(x+1,y)) true else false }
-		def DirectionsAvailable(x:Int, y:Int):Int = {
+		def IsSpotOpen(p:Point):Boolean = { return maze(p.X)(p.Y) }
+		
+		def CanMove(next:Point):Boolean = { 
+			if (next.X < 0 || next.X >= rows || next.Y < 0 || next.Y >= cols || !IsSpotOpen(next)) false else true
+		}
+
+		def DirectionsAvailable(p:Point):Int = {
 			var dirsAvailable:Int = 0;
-			if (!IsSpotOpen(x,y)) return 0;
-			if (CanGoUp(x,y)) dirsAvailable+=1;
-			if (CanGoDown(x,y)) dirsAvailable+=1;
-			if (CanGoRight(x,y)) dirsAvailable+=1;
-			if (CanGoLeft(x,y)) dirsAvailable+=1;
+			if (!IsSpotOpen(p)) return 0;
+			if (CanMove(p.add(up))) dirsAvailable+=1;
+			if (CanMove(p.add(down))) dirsAvailable+=1;
+			if (CanMove(p.add(right))) dirsAvailable+=1;
+			if (CanMove(p.add(left))) dirsAvailable+=1;
 			return dirsAvailable;
 		}		
 
@@ -48,8 +60,9 @@ object RatRace {
 			var ends:ArrayList[Point] = new ArrayList[Point];
 			for (x <- 0 to cols-1) {
 				for (y <- 0 to rows-1) {
-					if (DirectionsAvailable(x,y) == 1)
-					ends.add(new Point(x,y));
+					val p = new Point(x,y)
+					if (DirectionsAvailable(p) == 1)
+					ends.add(p);
 				}
 			}
 
@@ -58,13 +71,23 @@ object RatRace {
 
 		def max(a:Int, b:Int) = if (a>b) a else b
 
-		def Traverse(v:VisitTracker, p:Point,lengthSoFar:Int):Int = {
-			v.visit(p.X,p.Y)
-			var longest:Int = lengthSoFar;
-			if (CanGoUp(p.X,p.Y) && !v.isVisited(p.X,p.Y-1)) { longest = max(longest,Traverse(v,new Point(p.X,p.Y-1),lengthSoFar+1));}
-			if (CanGoDown(p.X,p.Y) && !v.isVisited(p.X,p.Y+1)) { longest = max(longest,Traverse(v,new Point(p.X,p.Y+1),lengthSoFar+1));}
-			if (CanGoLeft(p.X,p.Y) && !v.isVisited(p.X-1,p.Y)) { longest = max(longest,Traverse(v,new Point(p.X-1,p.Y),lengthSoFar+1));}
-			if (CanGoRight(p.X,p.Y) && !v.isVisited(p.X+1,p.Y)) { longest = max(longest,Traverse(v,new Point(p.X+1,p.Y),lengthSoFar+1));}
+		def Traverse(v:VisitTracker, start:Point):Int = {
+			val stack = Stack[Progress]()
+			var done:Boolean = false
+			var p:Progress = new Progress(start, 0)
+			var longest = 0
+			while(!done) {
+				v.visit(p.point.X,p.point.Y)
+				val nextUp = new Progress(p.point.add(up),p.distance+1)
+				if (CanMove(nextUp.point) && !v.isVisited(nextUp.point)) { longest = max(longest,nextUp.distance); stack.push(nextUp); }
+				val nextDown = new Progress(p.point.add(down),p.distance+1)
+				if (CanMove(nextDown.point) && !v.isVisited(nextDown.point)) { longest = max(longest,nextDown.distance); stack.push(nextDown); }
+				val nextLeft = new Progress(p.point.add(left),p.distance+1)
+				if (CanMove(nextLeft.point) && !v.isVisited(nextLeft.point)) { longest = max(longest,nextLeft.distance); stack.push(nextLeft); }
+				val nextRight = new Progress(p.point.add(right),p.distance+1)
+				if (CanMove(nextRight.point) && !v.isVisited(nextRight.point)) { longest = max(longest,nextRight.distance); stack.push(nextRight); }
+				if (stack.length > 0) { p = stack.pop() } else {done = true}
+			}
 			return longest
 		}
 		def FindLongestPath():Int = {
@@ -72,7 +95,7 @@ object RatRace {
 			var longest:Int = 0;
 			for (i <- 0 to ends.size()-2) {
 				val v:VisitTracker = new VisitTracker(cols,rows);
-				longest = max(longest, Traverse(v,ends.get(i),0));
+				longest = max(longest, Traverse(v,ends.get(i)));
 			}
 			return longest;
 		}
