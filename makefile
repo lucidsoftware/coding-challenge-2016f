@@ -6,6 +6,7 @@ USER := byuadmin
 
 uppercase = $(shell tr '[a-z]' '[A-Z]' <<< $1)
 
+CONTEST := LUCID2016
 PROBLEMS := $(wildcard problems/*)
 TEST_DIRS := $(wildcard problems/*/test/data)
 UPLOADS_SRC := $(wildcard contest/uploads/*)
@@ -14,7 +15,7 @@ UPLOADS_SRC := $(wildcard contest/uploads/*)
 all: contest problems solutions uploads
 
 .PHONY: contest
-contest: target/BYU2015F.html
+contest: target/LUCID2016.html
 
 .PHONY: solutions
 solutions: $(SOLUTION_DIRS:%=target/%.zip.upload)
@@ -27,16 +28,28 @@ uploads: $(UPLOADS_SRC:%=target/%)
 
 .PHONY: clean
 clean:
-	rm -fr target
+	rm -fr \
+		problem-descriptions.pdf \
+		problems/*/description.html \
+		target
+
+PROBLEM_DESCRIPTIONS_MD := $(wildcard problems/*/description.md)
+PROBLEM_DESCRIPTIONS_HTML := $(PROBLEM_DESCRIPTIONS_MD:%.md=%.html)
+
+problem-descriptions.pdf: $(PROBLEM_DESCRIPTIONS_HTML)
+	wkhtmltopdf -g --print-media-type $^ $@
+
+problems/%/description.html: problems/%/description.md
+	ruby -rerb -rnet/http -e 'puts ERB.new(File.read "convert.html.erb").result' < $< > $@
 
 target/contest.upload: contest/footer.html
 	@mkdir -p $(@D)
-	./spoj.py --user=$(USER) --password=$(PASSWORD) contest --footer-file=$< BYU2015F
+	./spoj.py --user=$(USER) --password=$(PASSWORD) contest --footer-file=$< $(CONTEST)
 	@> $@
 
 target/contest/uploads/%: uploads/%
 	@mkdir -p $(@D)
-	./spoj.py --user=$(USER) --password=$(PASSWORD) upload --file=$< BYU2015F $(*:%.html=%)
+	./spoj.py --user=$(USER) --password=$(PASSWORD) upload --file=$< $(CONTEST) $(*:%.html=%)
 	@> $@
 
 target/problems/%/test/data.zip: 
