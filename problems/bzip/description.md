@@ -1,4 +1,4 @@
-# Binary Zip
+# Binary zip
 
 <img align="right" src="http://imgs.xkcd.com/comics/1_to_10.png" alt="If you get an 11/100 on a CS test, but you claim it should be counted as a &#39;C&#39;, they&#39;ll probably decide you deserve the upgrade." title="If you get an 11/100 on a CS test, but you claim it should be counted as a &#39;C&#39;, they&#39;ll probably decide you deserve the upgrade." height="250">
 
@@ -15,11 +15,11 @@ The unsigned 8 bit integer 170 is represented as 10101010. the 8 bit unsigned in
 
 ## Input
 
-The input will consist of two lines. The first line will have a number N (1 <= N <= 32), the number of bits in each number. The second line will contain 2 N-bit unsigned integers A and B separated by a space.
+The input will consist of two lines. The first line will have a number *N* (1 <= *N* <= 32), the number of bits in each number. The second line will contain two *N*-bit unsigned integers separated by a space.
 
 ## Output
 
-If A and B make a binary zip, print `YES`. Otherwise, print `NO`.
+The two integers make a binary zip, print `YES`. Otherwise, print `NO`.
 
 ## Examples
 

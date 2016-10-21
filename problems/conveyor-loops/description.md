@@ -1,4 +1,4 @@
-# Conveyor Loops
+# Conveyor loops
 
 <img align="right" src="images/image01.png" height="200">
 <img align="right" src="images/image00.png" height="200">
@@ -9,13 +9,18 @@ Factorio is a game in which the player must build an elaborate network of machin
 
 You are presented with a grid of 1m x 1m squares, each being empty or having a single conveyor belt. 
 
-Each conveyor belt moves resources UP, LEFT, DOWN, or RIGHT; this direction does not change. All conveyor belts move at the same speed. Empty spaces do not move resources.
+Each conveyor belt moves resources either up, right, down, or left; this direction does not change. All conveyor belts move at the same speed. Empty spaces do not move resources.
 
 Find the longest loop of conveyor belts. In other words, determine the longest path a resource could take before returning to its starting position.
 
 ## Input
 
-The first is two space-separated integers r and c (1 ≤ r, c ≤ 10,000), the number of rows and columns in the conveyor belt grid, respectively. The next r lines of input each consist of c space-separated characters: `^` (UP), `>` (RIGHT), `<` (LEFT), `V` (DOWN), or `-` (EMPTY).
+The first is two space-separated integers *r* and *c* (1 ≤ *r*, *c* ≤ 10,000), the number of rows and columns in the grid. The next *r* lines of input each consist of *c* space-separated characters:
+* up conveyor `^`
+* right conveyor `>`
+* down conveyor `V`
+* left  conveyor `<`
+* empty `-`
 
 ## Output
 

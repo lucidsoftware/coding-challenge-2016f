@@ -1,24 +1,28 @@
-# King's wrapped journey
+# Knight's journey
 
 ## Description
 
-Imagine a chess board wrapped around a Torus as shown in the figure below.
+Imagine a chess board wrapped around a torus as shown in the figure below.
 
 <div align="middle">
     <img src="Toroidal-Poloidal.png" height="250">
 </div>
 
-This wrapping will cause top edge to be connection to the bottom edge of the chess board, as well as left edge to be connected to the right.
+This wrapping causes the top edge to connect to the bottom edge of the chess board, as well as left edge to connect to the right.
 
-A King is a chess piece that may move to any directly adjacent or diagonal square in a single turn. Calculate the minimum number of turns required for a King to travel from a given starting position to a given destination.
+A knight is a chess piece that moves one space along one axis and two spaces along the other axis.
+
+Calculate the minimum number of moves required for a knight to travel from a given starting position to a given destination on a toroidal board of arbitrary size.
 
 ## Input
 
-The first line is a number *N*. *N* testcases follow. Each test case consists of two space-separated coordinates. Each coordinate will appear on a separate line of input.
+The first line is two integers *R* and *C* (1 ≤ *R*, *C* ≤ 10,000), which are the dimensions of the board.
+
+The second line is the starting location, and the third line is the ending location.
 
 ## Output
 
-Output a single integer for each test case indicating the minimum number of turns that are required for the king to move from the given starting coordinates to the given destination coordinates.
+Output a single integer for each test case indicating the minimum number of moves that are required for the knight to move from the origin to the destination.
 
 ## Examples
 
@@ -29,17 +33,16 @@ Output a single integer for each test case indicating the minimum number of turn
     </tr>
     <tr>
         <td valign="top">
-<pre>1
-0 0
-0 1</pre>
-        </td>
-        <td valign="top">
-<pre>2
-0 0
-1 2
+<pre>8 8
 0 0
 7 7</pre>
         </td>
+        <td valign="top">
+<pre>2 100
+0 0
+1 50
+</pre>
+        </td>
     </tr>
     <tr>
         <th>Output</th>
@@ -47,12 +50,10 @@ Output a single integer for each test case indicating the minimum number of turn
     </tr>
     <tr>
         <td valign="top">
-<pre>1</pre>
+<pre>2</pre>
         </td>
         <td valign="top">
-<pre>2
-1
-</pre>
+<pre>25</pre>
         </td>
     </tr>
 </table>

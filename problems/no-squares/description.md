@@ -1,4 +1,4 @@
-# No squares2
+# No squares
 
 <img align="right" src="http://imgs.xkcd.com/comics/factoring_the_time.png" title="I occasionally do this with mile markers on the highway." alt="Factoring the Time" height="300">
 
@@ -18,7 +18,7 @@ An integer between 2 and 2,000,000 inclusive.
 
 ## Output
 
-The shortest length of the integer's non-squarish factoring.
+The shortest length of the integer's non-squarish factorings.
 
 ## Examples
 
@@ -26,17 +26,21 @@ The shortest length of the integer's non-squarish factoring.
     <tr>
         <th>Input</th>
         <th>Input</th>
+        <th>Input</th>
     </tr>
     <tr>
         <td><pre>24</pre></td>
         <td><pre>4</pre></td>
+        <td><pre>1000000</pre></td>
     </tr>
     <tr>
+        <th>Output</th>
         <th>Output</th>
         <th>Output</th>
     </tr>
     <tr>
         <td><pre>3</pre></td>
         <td><pre>2</pre></td>
+        <td><pre>6</pre></td>
     </tr>
 </table>

@@ -1,8 +1,12 @@
-# Swiss Bank Account
+# Swiss bank account
 
 ## Description
 
-Excentric multi-millionaire Thurston Howell III died in 1973. His vast fortune was held in a swiss bank account and his only heir, his son Gerald was never able to access the fortune because he could not find the account number amidst his father records. Gerald recently passed away and with his passing several teams of fortune hunters have begun searching for the secret account number hoping to be the first to claim Thurston's fortune. You have been contacted by a group who claims to hold the secret to finding the account number and are asking for your help. They have sent you a picture of a single page that appears to contain the specifications for a primitive (by modern standards) assembly language. This group claims to have possesion of a program that, when run, would output the bank account number.  Your job is to implement a VM to run specified language since no existing processor exists that can run this assembly language.
+Excentric multi-millionaire Thurston Howell III died in 1973. His vast fortune was held in a swiss bank account and his only heir, his son Gerald was never able to access the fortune because he could not find the account number amidst his father records. Gerald recently passed away and with his passing several teams of fortune hunters have begun searching for the secret account number hoping to be the first to claim Thurston's fortune.
+
+A group claims to know how to find the account number. They have a picture of a single page that appears to contain the specifications for a primitive language. They also possess a program in this languge, which when run, will supposedly output the bank account number. 
+
+Since no existing processor can run this language, they have hired you to write a VM for it.
 
 ### Specification
 

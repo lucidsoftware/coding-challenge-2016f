@@ -1,0 +1,92 @@
+body, .menu {
+	background: #f4f4f4;
+}
+
+/* Ads */
+iframe, ins, .aProblemTop {
+	display: none;
+}
+
+form[name="fch"] {
+	display: none;
+}
+
+.footer {
+	padding-top: 4px;
+}
+
+.content0 {
+	border-right: none;
+}
+
+.content, .content0 {
+	background: white;
+}
+
+.navigation {
+	background: white;
+}
+
+table.navigation {
+	display: none;
+}
+
+.navigation + h3 {
+	display: none;
+}
+
+.problems:first-child {
+	margin-bottom: 10px;
+	padding: 0 100px;
+}
+
+.headerleft, .headerright, .headerrowleft, .headerrowright {
+	background: #000080;
+}
+
+.headerleft {
+	border-top-left-radius: 30px;
+}
+
+.headerright {
+	border-top-right-radius: 30px;
+}
+
+.headerrowleft {
+	border-top-left-radius: 11px;
+}
+
+.headerrowright {
+	border-top-right-radius: 11px;
+}
+
+a[href="/BYU2015F/news"],
+	a[href="/BYU2015F/news"] + br,
+	a[href="/BYU2015F/comments"],
+	a[href="/BYU2015F/comments"] + br,
+	a[href="/BYU2015F/embed/info/"],
+	a[href="/BYU2015F/embed/info/"] + br,
+	a[href="/BYU2015F/embed/links/"],
+	a[href="/BYU2015F/embed/links/"] + br {
+	display: none ! important;
+}
+
+/** Temporary */
+a[href*=edit][href*=problems] {
+	display: none;
+}
+
+.fb-like {
+	display: none;
+}
+#___plusone_0 {
+	display: none !important;
+}
+
+table td h1 {
+	margin: 0;
+}
+
+table td > h2:last-child, table td > h2:first-child, table + br {
+	display: none;
+}

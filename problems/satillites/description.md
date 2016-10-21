@@ -8,6 +8,8 @@ We are ready for the Orberth Kuiper Maneuver, except that we have just detected 
 
 Find the shortest distance between the rocket and the comet after launch. For the purposes of this calculation, we'll approximate the trajectories of the rocket and the comet as straight lines with constant velocities.
 
+Don't forget the Cartesian distance formula: √(Δx<sup>2</sup> + Δy<sup>2</sup> + Δz<sup>2</sup>)
+
 ## Input
 
 The first line is the starting 3D position of the rocket, given in meters as three integers between -10<sup>6</sup> and 10<sup>6</sup> inclusive.

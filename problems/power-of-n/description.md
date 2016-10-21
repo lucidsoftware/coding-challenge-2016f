@@ -4,11 +4,11 @@
 
 ## Description
 
-A number *k* is a power *n* if there exists an integer *i* ≥ 0 for which *k* = *n*<sup>*i*</sup>.
+A number *k* is a power of *n* if there exists an integer *i* ≥ 0 for which *k* = *n*<sup>*i*</sup>.
 
 ## Input
 
-The first line is *k*, and the second line is *n*. 1 ≤ *k*, *n* < 2<sup>32</sup>.
+The first line is *k*, and the second line is *n* (1 ≤ *k*, *n* < 2<sup>32</sup>).
 
 ## Output
 
